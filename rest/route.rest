@@ -1,5 +1,21 @@
 ###
 GET http://localhost:3000/organicnom/exercises/all
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImpvaG4iLCJpYXQiOjE2MDgzOTM3MzcsImV4cCI6MTYwODM5NzMzN30.f0LbiiZqyzKSGlIZUxAo-b5j_XO-SbaAw8N92xyceBk
 ###
 GET http://localhost:3000/organicnom/lessons/all
+
+###
+POST http://localhost:4000/login
+Content-Type: application/json
+
+{
+    "uid" : "BF24uW1IhzVccJtsudGrdpQ1eR12"
+}
+
+###
+POST http://localhost:4000/token HTTP/1.1
+Content-Type: application/json
+
+{
+    "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImpvaG4iLCJhcHBJZCI6Im9yZ2FuaWNub20iLCJpYXQiOjE2MDgzOTM2MzN9.R9aGPDzs-hEiuHNLUwb--wBWJvSblX1tCY7TiOQfuZU"
+}
