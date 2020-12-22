@@ -1,7 +1,7 @@
 let queries = {};
 
-queries.allExercises = "SELECT * FROM apps_videos WHERE type='M' LIMIT 5";
-queries.allLessons = "SELECT * FROM apps_videos WHERE type='L' LIMIT 5";
+queries.allExercises = "SELECT * FROM apps_videos WHERE type='M'";
+queries.allLessons = "SELECT * FROM apps_videos WHERE type='L'";
 
 
 module.exports = queries;

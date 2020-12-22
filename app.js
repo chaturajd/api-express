@@ -13,14 +13,14 @@ app.use(express.json());
 //Routes
 app.use('/organicnom',authenticateToken,organicnomRouter);
 
-app.post('/login',(req,res)=>{
+// app.post('/login',(req,res)=>{
 
-    const username = req.body.username;
-    const user = {name:username};
+//     const username = req.body.username;
+//     const user = {name:username};
 
-    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-    res.json({accessToken:accessToken});
-});
+//     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+//     res.json({accessToken:accessToken});
+// });
 
 
 function authenticateToken(req,res,next){
@@ -28,9 +28,10 @@ function authenticateToken(req,res,next){
     const token = authHeader && authHeader.split(' ')[1];
     if(token == null) return res.sendStatus(401);
 
-    jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,userId)=>{
+    jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,info)=>{
         if(err) return res.sendStatus(403);
-        req.userId = userId;
+        console.log(info);
+        req.info = info;
         next();
     });
 }

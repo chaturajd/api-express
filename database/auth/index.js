@@ -5,7 +5,7 @@ let auth = {};
 
 auth.storeRefreshToken = (refreshToken, userId) => {
     return new Promise((resolve, reject) => {
-        db.pool.query(`INSERT INTO auth_tokens (refresh_token,user_id) VALUES ('${refreshToken}','${userId}');`, (err, results) => {
+        db.pool.query(`INSERT INTO auth_tokens (refresh_token,user_uid) VALUES ('${refreshToken}','${userId}');`, (err, results) => {
             if (err) return reject(err);
             return resolve(results);
         });

@@ -16,12 +16,14 @@ app.use(express.json());
 
 //Routes
 app.post('/login', verifyFirebaseUid, (req, res) => {
+// app.post('/login', (req, res) => {
+
 
     const userId = req.uid;
-    const user = { id: userId, appId: "organicnom" };
+    const appId = "organicnom"
 
-    const accessToken = genarateAccessToken(user);
-    const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+    const accessToken = genarateAccessToken(userId,appId);
+    const refreshToken = jwt.sign({"userId" : userId,"appId":appId}, process.env.REFRESH_TOKEN_SECRET);
 
     db.storeRefreshToken(refreshToken, userId);
 
@@ -29,15 +31,19 @@ app.post('/login', verifyFirebaseUid, (req, res) => {
 });
 
 app.post('/token', async (req, res) => {
+    console.log("Token refresh requested")
     const refreshToken = req.body.token;
     if (refreshToken == null) return res.statusCode(401);
     const token = await db.getRefreshToken(refreshToken);
-    if (token == null) return res.statusCode(403);
-    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+    if (token == null) return res.status(403).send()
+    //  res.statusCode(403);
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, info) => {
         if (err) return res.sendStatus(403);
-        const accessToken = genarateAccessToken({ id: user.id });
+        console.log(info.userId);
+        const accessToken = genarateAccessToken( info.userId,info.appId );
         res.json({ accessToken: accessToken });
     });
+    
     // if(refreshToken == await db.getRefreshToken(refreshToken))
 });
 
@@ -46,15 +52,18 @@ app.delete('/logout', async (req, res) => {
     if (refreshToken == null) return res.statusCode(401);
     const deleted = await db.deleteRefreshToken(refreshToken);
 
-    if (deleted) return res.statusCode(200);
+    if (deleted) return res.statusCode(204);
 
     return res.statusCode(401);
 });
 
 function verifyFirebaseUid(req, res, next) {
-    firebase.auth().verifyIdToken(req.body.uid).then((decodedToken) => {
+
+    console.log(req.body);
+
+    firebase.auth().verifyIdToken(req.body.token).then((decodedToken) => {
         const user = decodedToken.uid;
-        console.log(`Decoded Firebase Id : ${decodedToken}`);
+        console.log(`Decoded Firebase email : ${decodedToken.email}`);
         req.uid = user;
         next();
     }).catch((error) => {
@@ -62,8 +71,13 @@ function verifyFirebaseUid(req, res, next) {
     });
 }
 
-function genarateAccessToken(userId) {
-    return jwt.sign(userId, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '3600s' });
+function genarateAccessToken(userId,appId) {
+    const info = {
+        "userId" :userId,
+        "appId" : appId,
+    };
+
+    return jwt.sign(info, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '12s' });
 }
 
 firebase.initializeApp({

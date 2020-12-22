@@ -1,15 +1,10 @@
-###
-GET http://localhost:3000/organicnom/exercises/all
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImpvaG4iLCJpYXQiOjE2MDgzOTM3MzcsImV4cCI6MTYwODM5NzMzN30.f0LbiiZqyzKSGlIZUxAo-b5j_XO-SbaAw8N92xyceBk
-###
-GET http://localhost:3000/organicnom/lessons/all
 
 ###
 POST http://localhost:4000/login
 Content-Type: application/json
 
 {
-    "uid" : "BF24uW1IhzVccJtsudGrdpQ1eR12"
+    "token" :   //firebase token
 }
 
 ###
@@ -18,4 +13,23 @@ Content-Type: application/json
 
 {
     "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImpvaG4iLCJhcHBJZCI6Im9yZ2FuaWNub20iLCJpYXQiOjE2MDgzOTM2MzN9.R9aGPDzs-hEiuHNLUwb--wBWJvSblX1tCY7TiOQfuZU"
+}
+
+
+###
+GET http://localhost:3000/organicnom/exercises/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImpvaG4iLCJpYXQiOjE2MDgzOTM3MzcsImV4cCI6MTYwODM5NzMzN30.f0LbiiZqyzKSGlIZUxAo-b5j_XO-SbaAw8N92xyceBk
+###
+GET http://localhost:3000/organicnom/lessons/all
+Content-Type: application/json
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6Im9yZ2FuaWNub20iLCJpYXQiOjE2MDg1Njk0MTgsImV4cCI6MTYwODU2OTc0OH0.fF8J1kJ8_9msN_9_3k8NKyNpBGVTqtoY8dUJN1sJpy0
+
+###
+POST http://localhost:3000/organicnom/pointers/update
+Content-Type: application/json
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6Im9yZ2FuaWNub20iLCJpYXQiOjE2MDg1Njk5NzcsImV4cCI6MTYwODU3MDMwN30.sbNFNEEbbN8Va7bn0e02V6pRmNwP7GNHjFmj6gV-Q2M
+
+{
+    "lessonPointer" :321,
+    "exercisePointer" : 10
 }
