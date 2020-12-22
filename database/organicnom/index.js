@@ -1,5 +1,5 @@
 const db = require('../index');
-const queries = require('./queries').default;
+const queries = require('./queries');
 
 let organicnom = {};
 
@@ -42,6 +42,8 @@ organicnom.getPointers = (userId) => {
         });
     });
 }
+
+organicnom.test = "qer";
 
 
 module.exports = organicnom;
